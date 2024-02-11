@@ -77,7 +77,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 175
         }
-
+        //For Stat because number is so fat
         let golfStatsConfig ={
             fontFamily: 'Verdana',
             fontSize: '30px',
@@ -90,6 +90,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 250
         }
+        //The text we gonna see in RN golf game
         this.shotCounterLeft = this.add.text(width / 18, height / 35, 'Shot:' + this.shotCounter, shotCounterConfig)
         this.golfScoreLeft =this.add.text(width / 18, height / 10, 'Score:' + this.golfScore, shotCounterConfig)
         this.golfStatsLeft = this.add.text(width*3/5, height /35, 'Stats:' + this.golfStats + '%', golfStatsConfig)
@@ -101,6 +102,7 @@ class Play extends Phaser.Scene {
             this.ball.body.setVelocityX(Phaser.Math.Between(-this.SHOT_VELOCITY_X, this.SHOT_VELOCITY_X))
             this.ball.body.setVelocityY(Phaser.Math.Between(this.SHOT_VELOCITY_Y_MIN, this.SHOT_VELOCITY_Y_MAX) * shotDirection)
 
+            //Our updates, this for shot & stats
             this.shotCounter += 1
             this.golfStats += 100* Phaser.Math.RoundTo( this.golfScore/this.shotCounter, -2)
             this.shotCounterLeft.text = 'Shots:' + this.shotCounter
@@ -110,9 +112,11 @@ class Play extends Phaser.Scene {
 
         // cup/ball collision
         this.physics.add.collider(this.ball, this.cup, (ball, cup) => {
+            //If we hit the ball in cup, it resets the golf ball at its same spot
             ball.setPosition(width / 2, height - height / 10)
             ball.setVelocity(0)
 
+            //Our updates, this for score & stats
             this.golfScore +=1
             this.golfStats += 100* Phaser.Math.RoundTo(this.golfScore/this.shotCounter, -2)
             this.golfScoreLeft.text = 'Score:' + this.golfScore
